@@ -147,7 +147,6 @@ def calc_information_gain(traffic_data, attribute, threshold):
     :param threshold: the threshold to split on
     :return: the calculated information gain of the given split
     """
-    # might have to change depending on sign
     split1 = traffic_data.loc[traffic_data[attribute] > threshold]
     split2 = traffic_data.loc[traffic_data[attribute] <= threshold]
     num_split1 = len(split1)
@@ -181,7 +180,7 @@ def make_decision_tree(traffic_data, call_depth, attributes_available):
         else:
             return f"{INDENT * call_depth}intent = {AGGRESSIVE}"
 
-    # majority of the node (>90%) is 1 class, return that class
+    # majority of the node (≥88%) is 1 class, return that class
     if len(traffic_data.loc[traffic_data['INTENT'] == 2]) / len(traffic_data) >= 0.88:
         return f"{INDENT * call_depth}intent = {AGGRESSIVE}"
     if len(traffic_data.loc[traffic_data['INTENT'] < 2]) / len(traffic_data) >= 0.88:
